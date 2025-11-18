@@ -1,6 +1,6 @@
 import { param, query, body, oneOf } from 'express-validator';
 import { handleValidationErrors } from './handleValidationErrors.js';
-
+import { existsBookByTitle } from '../repositories/bookRepo.js';
 
 const allowedSortFields = ['id', 'title', 'authorId'];
 const allowedSortOrders = ['asc', 'desc'];
@@ -60,7 +60,13 @@ export const validateCreateBook = [
     .withMessage('Book title must be a string')
     .bail()
     .isLength({ min: 2 })
-    .withMessage('Book title must be at least 2 characters'),
+    .withMessage('Book title must be at least 2 characters')
+    .custom(async (title, { req }) => {
+        if (await existsBookByTitle(title, req.body.authorId)) {
+          throw new Error(`Book "${title}" by this author already exists`);
+        }
+        return true;
+      }),
 
   body('authorId')
     .exists({ values: 'falsy' })
