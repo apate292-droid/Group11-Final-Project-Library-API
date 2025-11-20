@@ -12,6 +12,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+
 }
 
 model User{
@@ -33,8 +34,8 @@ model Author{
 model Book{
   id Int @id @default(autoincrement())
   title String
-  author_id Int
-  author  Author @relation(fields: [author_id], references: [id])
+  authorId Int
+  author  Author @relation(fields: [authorId], references: [id])
   reviews Review[]
 }
 
@@ -42,11 +43,11 @@ model Review{
   id Int @id @default(autoincrement())
   rating Int
   comment String
-  book_id Int
-  user_id Int
+  bookId Int
+  userId Int
 
-  book Book @relation(fields: [book_id], references: [id])
-  user User @relation(fields: [user_id], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
 
