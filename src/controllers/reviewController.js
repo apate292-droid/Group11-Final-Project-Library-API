@@ -29,16 +29,30 @@ import {
   }
 
 
-  export async function createReviewHandler(req, res) {
-    const data = {
-      comment: req.body.comment,
-      rating: req.body.rating,
-      bookId: req.body.bookId,
-      userId: req.body.userId,
-    };
-    const newReview = await createReview(data);
+export async function createReviewHandler(req, res) {
+  try {
+    const authenticatedUserId = req.user.id;
+    const {
+      comment,
+      rating,
+      bookId,
+    } = req.body;
+    const reviewData = {
+      comment,
+      rating,
+      bookId,
+      userId: authenticatedUserId,
+    }
+    const newReview = await createReview(reviewData);
     res.status(201).json(newReview);
+  } catch (error){
+    console.error("Review Creation Failed:", error);
+    res.status(500).json({
+      message: "Review creation failed due to server error.",
+      error: error.message
+    });
   }
+}
 
   export async function updateReviewHandler(req, res) {
     const id = parseInt(req.params.id);
