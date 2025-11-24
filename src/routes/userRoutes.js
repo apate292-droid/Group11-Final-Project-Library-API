@@ -7,15 +7,20 @@ import {
   deleteUserHandler
 } from "../controllers/userController.js";
 
-import { authenticate } from "../middlewares/authenticate.js";
-import authorizeOwnership from "../middlewares/authorizeOwnership.js";
-import authorizeRoles from "../middlewares/authorizeRoles.js";
+import { authenticate } from "../middleware/authenticate.js";
+import authorizeOwnerships from "../middleware/authorizeOwnership.js";
+
+import authorizeRoles from "../middleware/authorizeRoles.js";
+
+
+import { loginUserHandler } from '../controllers/userController.js';
+
 import { 
   validateCreateUser, 
   validateUpdateUser, 
   validateUserId 
-} from "../middlewares/userValidation.js";
-import { handleValidationErrors } from "../middlewares/handleValidationErrors.js";
+} from "../middleware/userValidation.js";
+import { handleValidationErrors } from "../middleware/handleValidationErrors.js";
 
 const router = express.Router();
 
@@ -38,17 +43,20 @@ router.get(
 );
 
 router.post(
-  '/create',
-  validateCreateUser,
-  handleValidationErrors,
-  createUserHandler
+  '/login',
+  loginUserHandler 
 );
 
+router.post(
+  '/create',
+
+  createUserHandler
+);
 
 router.put(
   '/:id',
   authenticate,
-  authorizeOwnership,
+  authorizeOwnerships('user'),
   validateUpdateUser,
   handleValidationErrors,
   updateUserHandler
