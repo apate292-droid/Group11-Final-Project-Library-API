@@ -1,0 +1,49 @@
+User:
+  type: object
+  properties:
+    id:
+      type: integer
+    username:
+      type: string
+    isAdmin:
+      type: boolean
+    reviews:
+      type: array
+      items:
+        $ref: "#/components/schemas/Review"
+
+Author:
+  type: object
+  properties:
+    id:
+      type: integer
+    name:
+      type: string
+
+Book:
+  type: object
+  properties:
+    id:
+      type: integer
+    title:
+      type: string
+    author:
+      $ref: "#/components/schemas/Author"
+    reviews:
+      type: array
+      items:
+        $ref: "#/components/schemas/Review"
+
+Review:
+  type: object
+  properties:
+    id:
+      type: integer
+    rating:
+      type: integer
+    comment:
+      type: string
+    book:
+      $ref: "#/components/schemas/Book"
+    user:
+      $ref: "#/components/schemas/User"

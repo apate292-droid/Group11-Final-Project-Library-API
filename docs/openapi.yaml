@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  title: Library REST API
+  version: 1.0.0
+  description: API for managing users, authors, books, and reviews.
+
+servers:
+  - url: http://localhost:3000
+  - url: https://your-render-url.onrender.com
+
+paths:
+  /authors:
+    $ref: "./paths/authors.yaml"
+  /books:
+    $ref: "./paths/books.yaml"
+  /reviews:
+    $ref: "./paths/reviews.yaml"
+  /users:
+    $ref: "./paths/users.yaml"
+
+components:
+  schemas:
+    $ref: "./components/schemas.yaml"

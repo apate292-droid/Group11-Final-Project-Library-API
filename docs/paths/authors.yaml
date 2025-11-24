@@ -1,0 +1,89 @@
+paths:
+  /authors:
+    get:
+      summary: Get all authors
+      tags: [Authors]
+      responses:
+        "200":
+          description: List of authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "../components/schemas.yaml#/Author"
+
+    post:
+      summary: Create a new author
+      tags: [Authors]
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "201":
+          description: Author created
+
+  /authors/{id}:
+    get:
+      summary: Get an author by ID
+      tags: [Authors]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Author details
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas.yaml#/Author"
+
+    put:
+      summary: Update an author
+      tags: [Authors]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Author updated
+
+    delete:
+      summary: Delete an author
+      tags: [Authors]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Author deleted

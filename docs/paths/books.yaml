@@ -1,0 +1,97 @@
+paths:
+  /books:
+    get:
+      summary: Get all books
+      tags: [Books]
+      responses:
+        "200":
+          description: List of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "../components/schemas.yaml#/Book"
+
+    post:
+      summary: Create a new book
+      tags: [Books]
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                authorId:
+                  type: integer
+      responses:
+        "201":
+          description: Book created
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas.yaml#/Book"
+
+  /books/{id}:
+    get:
+      summary: Get book by ID
+      tags: [Books]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "200":
+          description: Book found
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas.yaml#/Book"
+
+    put:
+      summary: Update a book
+      tags: [Books]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                authorId:
+                  type: integer
+      responses:
+        "200":
+          description: Book updated
+
+    delete:
+      summary: Delete a book
+      tags: [Books]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "204":
+          description: Book deleted
