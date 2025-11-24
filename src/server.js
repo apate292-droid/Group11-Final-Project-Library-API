@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import userRouter from './routes/userRoutes.js';
+import reviewRouter from './routes/reviewRoutes.js';
+import bookRouter from './routes/bookRoutes.js';
+import authorRouter from './routes/authorRoutes.js';
 
 import authRoutes from './routes/authRoutes.js';
 
@@ -12,7 +16,10 @@ app.use(morgan('tiny'));
 
 app.use(express.json());
 
-app.use('/api/auth', authRoutes);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/books', bookRouter);
+app.use('/api/v1/authors', authorRouter);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

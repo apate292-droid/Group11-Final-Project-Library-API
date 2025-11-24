@@ -1,10 +1,15 @@
+const authorizeRoles = (allowedRoles) => (req, res, next) => {
+    if (!req.user || !req.user.role) {
+        return res.status(401).json({ message: 'Authentication required' });
+    }
 
-export const requireRole = (role) => {
-    return (req, res, next) => {
-        if (req.user.role !== role) {
-            return res.status(403).json({ error: "Incorrect Access Type"});
+    const userRole = req.user.role;
 
-        }
+    if (allowedRoles.includes(userRole)) {
         next();
-    };
+    } else {
+        res.status(403).json({ message: 'Forbidden Access' });
+    }
 };
+
+export default authorizeRoles;

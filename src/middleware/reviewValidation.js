@@ -71,12 +71,6 @@ export const validateCreateReview = [
       }
       return true;
     }),
-  body('userId')
-    .exists({ values: 'falsy' })
-    .withMessage('User ID is required')
-    .bail()
-    .isInt({ min: 1 })
-    .withMessage('User ID must be a positive integer'),
   handleValidationErrors,
 ];
 
