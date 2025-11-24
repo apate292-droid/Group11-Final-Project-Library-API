@@ -6,6 +6,8 @@ import reviewRouter from './routes/reviewRoutes.js';
 import bookRouter from './routes/bookRoutes.js';
 import authorRouter from './routes/authorRoutes.js';
 
+import authRoutes from './routes/authRoutes.js';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
