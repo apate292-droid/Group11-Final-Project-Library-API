@@ -1,0 +1,435 @@
+openapi: 3.1.0
+info:
+  title: Library REST API
+  version: 1.0.0
+  description: API for managing users, authors, books, and reviews.
+
+servers:
+  - url: http://localhost:3000
+    description: Local developement servers
+  - url: https://your-render-url.onrender.com
+    description: Production server on render
+
+paths:
+  /authors:
+    get:
+      summary: Get all authors
+      tags: [Authors]
+      responses:
+        "200":
+          description: List of authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Author"
+    post:
+      summary: Create a new author
+      tags: [Authors]
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "201":
+          description: Author created
+  /authors/{id}:
+    get:
+      summary: Get an author by ID
+      tags: [Authors]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Author details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+
+    put:
+      summary: Update an author
+      tags: [Authors]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Author updated
+
+    delete:
+      summary: Delete an author
+      tags: [Authors]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Author deleted
+    
+  /books:
+    get:
+      summary: Get all books
+      tags: [Books]
+      responses:
+        "200":
+          description: List of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+
+    post:
+      summary: Create a new book
+      tags: [Books]
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                authorId:
+                  type: integer
+      responses:
+        "201":
+          description: Book created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+  /books/{id}:
+    get:
+      summary: Get book by ID
+      tags: [Books]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "200":
+          description: Book found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+
+    put:
+      summary: Update a book
+      tags: [Books]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                authorId:
+                  type: integer
+      responses:
+        "200":
+          description: Book updated
+
+    delete:
+      summary: Delete a book
+      tags: [Books]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "204":
+          description: Book deleted
+  /reviews:
+    get:
+      summary: Get all reviews
+      tags: [Reviews]
+      responses:
+        "200":
+          description: List of reviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+
+    post:
+      summary: Create a review
+      tags: [Reviews]
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: integer
+                comment:
+                  type: string
+                userId:
+                  type: integer
+                bookId:
+                  type: integer
+      responses:
+        "201":
+          description: Review created
+  /reviews/{id}:
+    get:
+      summary: Get a review by ID
+      tags: [Reviews]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "200":
+          description: Review details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Review"
+
+    put:
+      summary: Update a review
+      tags: [Reviews]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: integer
+                comment:
+                  type: string
+      responses:
+        "200":
+          description: Review updated
+
+    delete:
+      summary: Delete a review
+      tags: [Reviews]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "204":
+          description: Review deleted
+  /users:
+    get:
+      summary: Get all users
+      tags: [Users]
+      security:
+        - JWTAuth: []
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+    post:
+      summary: Register a new user
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          description: User created
+  /users/{id}:
+    get:
+      summary: Get a user by ID
+      tags: [Users]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+components:
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author:
+          $ref: "#/components/schemas/Author"
+        reviews:
+          type: array
+          items:
+            $ref: "#/components/schemas/Review"
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+        rating:
+          type: integer
+        comment:
+          type: string
+        book:
+          $ref: "#/components/schemas/Book"
+        user:
+          $ref: "#/components/schemas/User"
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        isAdmin:
+          type: boolean
+        reviews:
+          type: array
+          items:
+            $ref: "#/components/schemas/Review"
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Task not found"
+    ValidationError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Validation Failed
+        details:
+          type: array
+          items:
+            type: string
+  responses:
+    AuthorResponse:
+      AuthorResponse:
+      description: Author response object
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Author"
+    BadRequest:
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ValidationError"
+    ErrorResponse:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    FoundRequest:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NotFoundError"
