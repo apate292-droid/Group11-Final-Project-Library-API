@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { prisma } from '../config/db.js';
 
 const authorizeOwnerships = (modelName, idParam = 'id') => async (req, res, next) => {
     if (!req.user || !req.user.id) {
