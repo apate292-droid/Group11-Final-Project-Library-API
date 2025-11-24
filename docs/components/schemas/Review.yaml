@@ -1,0 +1,12 @@
+type: object
+properties:
+  id:
+    type: integer
+  rating:
+    type: integer
+  comment:
+    type: string
+  book:
+    $ref: ../components/schemas/Book
+  user:
+    $ref: ../components/schemas/User

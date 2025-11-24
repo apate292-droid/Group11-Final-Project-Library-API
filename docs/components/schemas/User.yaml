@@ -1,0 +1,12 @@
+type: object
+properties:
+  id:
+    type: integer
+  username:
+    type: string
+  isAdmin:
+    type: boolean
+  reviews:
+    type: array
+    items:
+      $ref: ../components/schemas/Review
