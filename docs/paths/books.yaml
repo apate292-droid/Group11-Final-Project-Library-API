@@ -1,0 +1,36 @@
+get:
+  summary: Get all books
+  tags: [Books]
+  responses:
+    "200":
+      description: List of books
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Book.yaml
+
+post:
+  summary: Create a new book
+  tags: [Books]
+  security:
+    - JWTAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            authorId:
+              type: integer
+  responses:
+    "201":
+      description: Book created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Book.yaml

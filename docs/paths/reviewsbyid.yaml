@@ -1,0 +1,57 @@
+get:
+  summary: Get a review by ID
+  tags: [Reviews]
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+  responses:
+    "200":
+      description: Review details
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Review.yaml
+
+put:
+  summary: Update a review
+  tags: [Reviews]
+  security:
+    - JWTAuth: []
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            rating:
+              type: integer
+            comment:
+              type: string
+  responses:
+    "200":
+      description: Review updated
+
+delete:
+  summary: Delete a review
+  tags: [Reviews]
+  security:
+    - JWTAuth: []
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+  responses:
+    "204":
+      description: Review deleted

@@ -1,0 +1,18 @@
+get:
+  summary: Get a user by ID
+  tags: [Users]
+  security:
+    - JWTAuth: []
+  parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: User
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/User.yaml

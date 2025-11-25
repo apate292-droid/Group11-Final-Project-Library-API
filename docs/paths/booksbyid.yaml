@@ -1,0 +1,57 @@
+get:
+  summary: Get book by ID
+  tags: [Books]
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+  responses:
+    "200":
+      description: Book found
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Book.yaml
+
+put:
+  summary: Update a book
+  tags: [Books]
+  security:
+    - JWTAuth: []
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            authorId:
+              type: integer
+  responses:
+    "200":
+      description: Book updated
+
+delete:
+  summary: Delete a book
+  tags: [Books]
+  security:
+    - JWTAuth: []
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+  responses:
+    "204":
+      description: Book deleted

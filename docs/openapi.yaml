@@ -1,0 +1,38 @@
+openapi: 3.1.0
+info:
+  title: Library REST API
+  version: 1.0.0
+  description: API for managing users, authors, books, and reviews.
+
+servers:
+  - url: http://localhost:3000
+    description: Local developement servers
+  - url: https://your-render-url.onrender.com
+    description: Production server on render
+
+tags:
+  - name: BookStore
+    description: BookStore-related endpoints
+
+paths:
+  /authors:
+    $ref: paths/authors.yaml
+  /authors/{id}:
+    $ref: paths/authorsbyid.yaml
+  /books:
+    $ref: paths/books.yaml
+  /books/{id}:
+    $ref: paths/booksbyid.yaml
+  /reviews:
+    $ref: paths/reviews.yaml
+  /reviews/{id}:
+    $ref: paths/reviewsbyid.yaml
+  /users:
+    $ref: paths/users.yaml
+  /users/{id}:
+    $ref: paths/usersbyid.yaml
+
+components:
+  schemas:
+    Author:
+      $ref: schemas/Author.yaml

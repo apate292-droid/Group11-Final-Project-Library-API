@@ -1,0 +1,6 @@
+AuthorResponse:
+  description: Author response object
+  content:
+    application/json:
+      schema:
+        $ref: "../components/schemas/Author.yaml"

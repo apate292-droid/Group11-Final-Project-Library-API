@@ -1,0 +1,31 @@
+get:
+  summary: Get all authors
+  tags: [Authors]
+  responses:
+    "200":
+      description: List of authors
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Author.yaml
+post:
+  summary: Create a new author
+  tags: [Authors]
+  security:
+    - JWTAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+  responses:
+    "201":
+      description: Author created
+
+
