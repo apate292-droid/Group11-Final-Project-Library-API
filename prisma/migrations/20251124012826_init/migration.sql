@@ -1,36 +1,27 @@
-/*
-  Warnings:
-
-  - You are about to drop the column `author_id` on the `Book` table. All the data in the column will be lost.
-  - You are about to drop the column `book_id` on the `Review` table. All the data in the column will be lost.
-  - You are about to drop the column `user_id` on the `Review` table. All the data in the column will be lost.
-  - A unique constraint covering the columns `[username]` on the table `User` will be added. If there are existing duplicate values, this will fail.
-  - Added the required column `authorId` to the `Book` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `bookId` to the `Review` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `userId` to the `Review` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- DropForeignKey
-ALTER TABLE "Book" DROP CONSTRAINT "Book_author_id_fkey";
+ALTER TABLE "Book" DROP CONSTRAINT IF EXISTS "Book_author_id_fkey";
 
 -- DropForeignKey
-ALTER TABLE "Review" DROP CONSTRAINT "Review_book_id_fkey";
+ALTER TABLE "Review" DROP CONSTRAINT IF EXISTS "Review_book_id_fkey";
 
 -- DropForeignKey
-ALTER TABLE "Review" DROP CONSTRAINT "Review_user_id_fkey";
+ALTER TABLE "Review" DROP CONSTRAINT IF EXISTS "Review_user_id_fkey";
 
 -- AlterTable
-ALTER TABLE "Book" DROP COLUMN "author_id",
-ADD COLUMN     "authorId" INTEGER NOT NULL;
+ALTER TABLE "Book" DROP COLUMN IF EXISTS "author_id";
+ALTER TABLE "Book" ADD COLUMN IF NOT EXISTS "authorId" INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE "Book" ALTER COLUMN "authorId" DROP DEFAULT;
 
 -- AlterTable
-ALTER TABLE "Review" DROP COLUMN "book_id",
-DROP COLUMN "user_id",
-ADD COLUMN     "bookId" INTEGER NOT NULL,
-ADD COLUMN     "userId" INTEGER NOT NULL;
+ALTER TABLE "Review" DROP COLUMN IF EXISTS "book_id";
+ALTER TABLE "Review" DROP COLUMN IF EXISTS "user_id";
+ALTER TABLE "Review" ADD COLUMN IF NOT EXISTS "bookId" INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE "Review" ADD COLUMN IF NOT EXISTS "userId" INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE "Review" ALTER COLUMN "bookId" DROP DEFAULT;
+ALTER TABLE "Review" ALTER COLUMN "userId" DROP DEFAULT;
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+CREATE UNIQUE INDEX IF NOT EXISTS "User_username_key" ON "User"("username");
 
 -- AddForeignKey
 ALTER TABLE "Book" ADD CONSTRAINT "Book_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "Author"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
