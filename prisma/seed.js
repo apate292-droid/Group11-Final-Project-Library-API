@@ -1,5 +1,5 @@
-import prisma from '../src/config/db.js';
-
+import bcrypt from 'bcrypt';
+import { prisma } from '../src/config/db.js';
 async function main() {
   console.log("Seeding database...");
 
@@ -8,6 +8,7 @@ async function main() {
   const admin = await prisma.user.create({
     data: {
       username: "admin",
+      email: "admin@library.com",
       password: adminPassword,
       isAdmin: true,
     },
@@ -18,6 +19,7 @@ async function main() {
   const user = await prisma.user.create({
     data: {
       username: "testuser",
+      email: "testuser@library.com",
       password: userPassword,
       isAdmin: false,
     },
