@@ -5,10 +5,10 @@ info:
   description: API for managing users, authors, books, and reviews.
 
 servers:
-  - url: http://localhost:3000
-    description: Local developement servers
-  - url: https://group11-final-project-library-api-ubkk.onrender.com
-    description: Production server on render
+  - url: https://group11-final-project-library-api-ubkk.onrender.com/api/v1
+    description: Production server on Render
+  - url: http://localhost:3000/api/v1
+    description: Local development server
 
 paths:
   /authors:
