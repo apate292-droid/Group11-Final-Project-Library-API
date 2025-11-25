@@ -7,7 +7,7 @@ info:
 servers:
   - url: http://localhost:3000
     description: Local developement servers
-  - url: https://your-render-url.onrender.com
+  - url: https://group11-final-project-library-api-ubkk.onrender.com
     description: Production server on render
 
 paths:
