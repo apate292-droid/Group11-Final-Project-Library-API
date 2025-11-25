@@ -28,6 +28,14 @@ app.use('/api/v1/books', bookRouter);
 app.use('/api/v1/authors', authorRouter);
 
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Library API is running' });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
