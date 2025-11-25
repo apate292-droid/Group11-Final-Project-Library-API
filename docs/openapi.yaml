@@ -32,7 +32,3 @@ paths:
   /users/{id}:
     $ref: paths/usersbyid.yaml
 
-components:
-  schemas:
-    Author:
-      $ref: schemas/Author.yaml
