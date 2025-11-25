@@ -1,4 +1,4 @@
-import prisma from '../config/db.js';
+import { prisma } from '../config/db.js';
 
 export async function getAll(filter = {}) {
   const { 
@@ -60,8 +60,10 @@ export async function remove(id) {
   }
 }
 
-
-
+export async function existsAuthorById(id) {
+  const count = await prisma.author.count({ where: { id } });
+  return count > 0;
+}
 
 export async function existsAuthorByName(name) {
   const count = await prisma.author.count({ where: { name } });

@@ -29,7 +29,7 @@ router.post(
 router.put(
   '/:id',
   authenticate,
-  authorizeOwnership,
+  authorizeOwnership('Review'),
   validateReviewId,
   validateUpdateReview,
   updateReviewHandler
@@ -38,7 +38,7 @@ router.put(
 router.delete(
   '/:id',
   authenticate,
-  authorizeOwnership,
+  authorizeOwnership('Review'),
   validateReviewId,
   deleteReviewHandler
 );

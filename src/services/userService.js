@@ -1,64 +1,54 @@
-import {
-    getAll,
-    getById,
-    create,
-    update,
-    remove,
-    existsByUserName
-  } from '../repositories/userRepo.js';
+import bcrypt from 'bcrypt';
+import { getAll, getById, create, update, remove, getByUserName, getByEmail } from '../repositories/userRepo.js';
 
-  export async function getAllUsers() {
-    return await getAll();
-  }
-
-
-export async function getUserById(id){
-    let result = await getById(id); 
-    if (result) return result;       
-    else {
-      const error = new Error(`Cannot find user with id ${id}`);
-      error.status = 404;
-      throw error;
-    }
+export async function getAllUsers() {
+  return getAll();
 }
 
- export async function createUser(data) {
-    if (await existsByUserName(data.username)) {
-        const error = new Error(`Username already taken: ${data.username}`);
-        error.status = 400; 
-        throw error;
-      }
-    return await create(data);  
+export async function getUserByUsername(username) {
+  return getByUserName(username);
+}
+
+export async function getUserByEmail(email) {
+    return await getByEmail(email);
+}
+
+export async function getUserById(id) {
+  const user = await getById(id);
+  if (!user) {
+    const error = new Error(`Cannot find user with id ${id}`);
+    error.status = 404;
+    throw error;
   }
+  return user;
+}
 
+export async function createUser(data) {
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+  return create({
+    username: data.username,
+    password: hashedPassword,
+    email: data.email,
+    isAdmin: data.isAdmin,
+  });
+}
 
-  export async function updateUser(id, data) {
-    const updatedUser = await update(id, data); 
-    if (updatedUser) return updatedUser;     
-    else {
-      const error = new Error(`Cannot find user with id ${id}`);
-      error.status = 404;
-      throw error;
-    }
+export async function updateUser(id, data) {
+  const user = await update(id, data);
+  if (!user) {
+    const error = new Error(`Cannot find user with id ${id}`);
+    error.status = 404;
+    throw error;
   }
+  return user;
+}
 
-
- export async function deleteUser(id) {
-    const result = await remove(id);  
-    if (!result) {
-      const error = new Error(`Cannot find user with id ${id}`);
-      error.status = 404;
-      throw error;
-    }
-    
-    return true;  
+export async function deleteUser(id) {
+  const user = await remove(id);
+  if (!user) {
+    const error = new Error(`Cannot find user with id ${id}`);
+    error.status = 404;
+    throw error;
   }
-  
-
-  
-
-
-
-  
-
-
+  return true;
+}
