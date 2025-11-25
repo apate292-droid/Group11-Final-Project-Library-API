@@ -1,15 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import userRouter from './routes/userRoutes.js';
-import reviewRouter from './routes/reviewRoutes.js';
-import bookRouter from './routes/bookRoutes.js';
-import authorRouter from './routes/authorRoutes.js';
-
-import authRoutes from './routes/authRoutes.js';
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const swaggerDocument = YAML.load("./docs/openapi.yaml");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(cors());
 
 app.use(morgan('tiny'));
