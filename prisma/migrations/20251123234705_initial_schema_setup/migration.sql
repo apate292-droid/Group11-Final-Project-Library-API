@@ -11,8 +11,7 @@
 
 */
 -- DropForeignKey
--ALTER TABLE "Book" DROP CONSTRAINT "Book_author_id_fkey";
-
+ALTER TABLE "Book" DROP CONSTRAINT "Book_author_id_fkey";
 
 -- DropForeignKey
 ALTER TABLE "Review" DROP CONSTRAINT "Review_book_id_fkey";
