@@ -18,7 +18,7 @@ const authorizeOwnerships = (modelName, idParam = 'id') => async (req, res, next
             return res.status(404).json({ message: `${modelName} not found.` }); 
         }
 
-        if (resource.userId == userId) {
+        if (resource.userId === userId) {
             next(); 
         } else {
             res.status(403).json({ message: 'Forbidden: You do not own this resource.' });
