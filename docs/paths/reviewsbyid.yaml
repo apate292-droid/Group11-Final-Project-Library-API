@@ -1,20 +1,3 @@
-get:
-  summary: Get a review by ID
-  tags: [Reviews]
-  parameters:
-    - in: path
-      name: id
-      schema:
-        type: integer
-      required: true
-  responses:
-    "200":
-      description: Review details
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/Review.yaml
-
 put:
   summary: Update a review
   tags: [Reviews]
