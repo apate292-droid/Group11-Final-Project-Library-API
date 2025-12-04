@@ -41,6 +41,7 @@ paths:
       responses:
         "201":
           description: Author created
+
   /authors/{id}:
     put:
       summary: Update an author
@@ -65,7 +66,6 @@ paths:
       responses:
         "200":
           description: Author updated
-
     delete:
       summary: Delete an author
       tags: [Authors]
@@ -80,7 +80,7 @@ paths:
       responses:
         "204":
           description: Author deleted
-    
+
   /books:
     get:
       summary: Get all books
@@ -94,7 +94,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Book"
-
     post:
       summary: Create a new book
       tags: [Books]
@@ -118,6 +117,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Book"
+
   /books/{id}:
     get:
       summary: Get book by ID
@@ -135,7 +135,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Book"
-
     put:
       summary: Update a book
       tags: [Books]
@@ -161,7 +160,6 @@ paths:
       responses:
         "200":
           description: Book updated
-
     delete:
       summary: Delete a book
       tags: [Books]
@@ -176,6 +174,7 @@ paths:
       responses:
         "204":
           description: Book deleted
+
   /reviews:
     get:
       summary: Get all reviews
@@ -189,7 +188,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Review"
-
     post:
       summary: Create a review
       tags: [Reviews]
@@ -213,24 +211,6 @@ paths:
       responses:
         "201":
           description: Review created
-  /reviews/{id}:
-    get:
-      summary: Get a review by ID
-      tags: [Reviews]
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-      responses:
-        "200":
-          description: Review details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Review"
-
     put:
       summary: Update a review
       tags: [Reviews]
@@ -256,7 +236,6 @@ paths:
       responses:
         "200":
           description: Review updated
-
     delete:
       summary: Delete a review
       tags: [Reviews]
@@ -271,6 +250,7 @@ paths:
       responses:
         "204":
           description: Review deleted
+
   /users:
     get:
       summary: Get all users
@@ -286,7 +266,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/User"
-
     post:
       summary: Register a new user
       tags: [Users]
@@ -304,6 +283,7 @@ paths:
       responses:
         "201":
           description: User created
+
   /users/{id}:
     get:
       summary: Get a user by ID
@@ -323,6 +303,46 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+    put:
+      summary: Update a user
+      tags: [Users]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: User updated
+    delete:
+      summary: Delete a user
+      tags: [Users]
+      security:
+        - JWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "204":
+          description: User deleted
+
 components:
   schemas:
     Author:
@@ -389,7 +409,6 @@ components:
             type: string
   responses:
     AuthorResponse:
-      AuthorResponse:
       description: Author response object
       content:
         application/json:
