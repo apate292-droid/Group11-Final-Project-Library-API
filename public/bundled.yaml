@@ -42,23 +42,6 @@ paths:
         "201":
           description: Author created
   /authors/{id}:
-    get:
-      summary: Get an author by ID
-      tags: [Authors]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Author details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Author"
-
     put:
       summary: Update an author
       tags: [Authors]
