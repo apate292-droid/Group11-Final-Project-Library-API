@@ -16,3 +16,44 @@ get:
         application/json:
           schema:
             $ref: ../components/schemas/User.yaml
+  
+put:
+  summary: Update a user
+  tags: [Users]
+  security:
+    - JWTAuth: []
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+  responses:
+    "200":
+      description: User updated
+
+delete:
+  summary: Delete a user
+  tags: [Users]
+  security:
+    - JWTAuth: []
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+  responses:
+    "204":
+      description: User deleted
