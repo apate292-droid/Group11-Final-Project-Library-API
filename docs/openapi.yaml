@@ -13,7 +13,20 @@ servers:
 tags:
   - name: BookStore
     description: BookStore-related endpoints
-
+components:
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Enter your JWT token in the format: Bearer <token>
+        
+        The token should contain:
+        - id or userId: User's unique identifier
+        - role: User's role (for role-based access control)
+        
+        Example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 paths:
   /authors:
     $ref: paths/authors.yaml
