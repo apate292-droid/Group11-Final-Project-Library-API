@@ -1,20 +1,3 @@
-get:
-  summary: Get an author by ID
-  tags: [Authors]
-  parameters:
-    - in: path
-      name: id
-      required: true
-      schema:
-        type: integer
-  responses:
-    "200":
-      description: Author details
-      content:
-        application/json:
-          schema:
-            $ref: ../components/schemas/Author.yaml
-
 put:
   summary: Update an author
   tags: [Authors]
